@@ -41,7 +41,7 @@ function App() {
     });
 
     setProducts(filteredProducts);
-  }, [searchQuery]);
+  }, [searchQuery, originalProducts]);
 
   function fetchProducts() {
     setIsLoading(true);
