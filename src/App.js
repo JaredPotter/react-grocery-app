@@ -68,15 +68,20 @@ function App() {
     setIsShowingAddEditProductModal(false);
   }
 
-  function handleCreateProduct(product) {
-    createProduct(product)
+  function handleCreateProduct(product, password) {
+    if (!isPasswordValid(password)) {
+      alert("Password is invalid!");
+      return;
+    }
+
+    createProduct(product, password)
       .then((response) => {
         setIsShowingAddEditProductModal(false);
         alert("SUCCESSFULLY CREATE NEW ITEM");
         fetchProducts();
       })
       .catch((error) => {
-        alert(error);
+        alert(error.response.data);
       });
   }
 
@@ -85,28 +90,46 @@ function App() {
     setIsShowingAddEditProductModal(true);
   }
 
-  function handleUpdateProduct(product) {
-    updateProduct(product._id, product)
+  function handleUpdateProduct(product, password) {
+    if (!isPasswordValid(password)) {
+      alert("Password is invalid!");
+      return;
+    }
+
+    updateProduct(product._id, product, password)
       .then((response) => {
         setIsShowingAddEditProductModal(false);
         alert("SUCCESSFULLY UPDATED PRODUCT");
         fetchProducts();
       })
       .catch((error) => {
-        alert(error);
+        alert(error.response.data);
       });
   }
 
-  function handleDeleteProduct(product) {
-    deleteProduct(product._id)
+  function handleDeleteProduct(product, password) {
+    if (!isPasswordValid(password)) {
+      alert("Password is invalid!");
+      return;
+    }
+
+    deleteProduct(product._id, password)
       .then((response) => {
         setIsShowingAddEditProductModal(false);
         alert("SUCCESSFULLY DELETED PRODUCT");
         fetchProducts();
       })
       .catch((error) => {
-        alert(error);
+        alert(error.response.data);
       });
+  }
+
+  function isPasswordValid(password) {
+    if (!password) {
+      return false;
+    }
+
+    return true;
   }
 
   return (

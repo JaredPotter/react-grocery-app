@@ -23,6 +23,7 @@ function AddEditProductForm({
     price: null,
     category: null,
   });
+  const [password, setPassword] = React.useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -58,9 +59,9 @@ function AddEditProductForm({
 
     if (existingProduct) {
       product._id = existingProduct._id;
-      handleUpdateProduct(product);
+      handleUpdateProduct(product, password);
     } else {
-      handleCreateProduct(product);
+      handleCreateProduct(product, password);
     }
   }
 
@@ -110,11 +111,19 @@ function AddEditProductForm({
             <span className="required">{errors.category}</span>
           ) : null}
         </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
         <button>{existingProduct ? "SAVE & CLOSE" : "CREATE & CLOSE"}</button>
       </form>
       <button onClick={handleCloseModal}>CLOSE</button>
       {existingProduct ? (
-        <button onClick={() => handleDeleteProduct(existingProduct)}>
+        <button onClick={() => handleDeleteProduct(existingProduct, password)}>
           DELETE
         </button>
       ) : null}
